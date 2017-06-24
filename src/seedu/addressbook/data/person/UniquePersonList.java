@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class UniquePersonList implements Iterable<Person> {
     public static class PersonNotFoundException extends Exception {}
 
     private final List<Person> internalList = new ArrayList<>();
+    
 
     /**
      * Constructs empty person list.
@@ -127,6 +129,15 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void clear() {
         internalList.clear();
+    }
+    
+    public void sortByNameAlphabetically(){
+    	internalList.sort(new Comparator<Person>(){
+			@Override
+			public int compare(Person p1, Person p2){
+				return p1.getName().toString().compareToIgnoreCase(p2.getName().toString());
+			}	
+		});
     }
 
     @Override
