@@ -53,10 +53,20 @@ public class Address {
 	public static boolean isValidAddress(String test) {
 		return test.matches(ADDRESS_VALIDATION_REGEX);
 	}
+	
+	private String getNonEmptyString(){
+		StringBuilder str = new StringBuilder("");
+		if(!block.toString().isEmpty()) str.append(block.toString());
+		if(!street.toString().isEmpty()) str.append(PS + street.toString());
+		if(!unit.toString().isEmpty()) str.append(PS + unit.toString());
+		if(!postalCode.toString().isEmpty()) str.append(PS + postalCode.toString());
+		if(!str.toString().isEmpty())return str.toString();
+		else return "No address saved.";
+	}
 
 	@Override
 	public String toString() {
-		return block.toString() + PS + street.toString() + PS + unit.toString() + PS + postalCode.toString();
+		return getNonEmptyString();
 	}
 
 	@Override
