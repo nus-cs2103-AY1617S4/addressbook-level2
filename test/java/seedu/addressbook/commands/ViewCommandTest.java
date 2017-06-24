@@ -144,7 +144,7 @@ public class ViewCommandTest {
         CommandResult result = viewCommand.execute();
 
         // feedback message is as expected and there are no relevant persons returned.
-        assertEquals(expectedMessage, result.feedbackToUser);
+        assertEquals(expectedMessage, result.feedbackMesssage());
         assertEquals(Optional.empty(), result.getRelevantPersons());
 
         // addressbook was not modified.
