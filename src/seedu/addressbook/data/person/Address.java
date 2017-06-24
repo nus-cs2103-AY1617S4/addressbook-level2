@@ -39,7 +39,8 @@ public class Address {
 	private void initialiseValues(String address) {
 		String[] addressParts = address.split(",");
 		block = new Block(addressParts[0].trim());
-		street = new Street(addressParts[1].trim());
+		if (addressParts.length > 1){street = new Street(addressParts[1].trim());}
+		else street = new Street("");
 		if (addressParts.length > 2){unit = new Unit(addressParts[2].trim());}
 		else unit = new Unit("");
 		if (addressParts.length > 3){postalCode = new PostalCode(addressParts[3].trim());}
