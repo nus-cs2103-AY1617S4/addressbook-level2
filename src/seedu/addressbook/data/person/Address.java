@@ -41,7 +41,9 @@ public class Address {
 		block = new Block(addressParts[0].trim());
 		street = new Street(addressParts[1].trim());
 		if (addressParts.length > 2){unit = new Unit(addressParts[2].trim());}
+		else unit = new Unit("");
 		if (addressParts.length > 3){postalCode = new PostalCode(addressParts[3].trim());}
+		else postalCode = new PostalCode("");
 	}
 
 	/**
@@ -58,6 +60,7 @@ public class Address {
 
 	@Override
 	public boolean equals(Object other) {
+		
 		return other == this // short circuit if same object
 				|| (other instanceof Address // instanceof handles nulls
 						&& this.block.equals(((Address) other).block)&& this.street.equals(((Address) other).street)
