@@ -17,7 +17,6 @@ public class Address {
     private static final int INDEX_UNIT = 2;
     private static final int INDEX_POSTAL_CODE = 3;
 
-    //public final String value;
     private Block _block;
     private Street _street;
     private Unit _unit;
@@ -37,12 +36,11 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         
-        //this.value = trimmedAddress;
         decomposeAddress(trimmedAddress);
     }
     
     /**
-     * Breaksdown an address into block, street, unit and postal code.
+     * Decomposes an address into block, street, unit and postal code.
      */
     private void decomposeAddress(String trimmedAddress){
         String[] decomposedAddress = trimmedAddress.split(",");
