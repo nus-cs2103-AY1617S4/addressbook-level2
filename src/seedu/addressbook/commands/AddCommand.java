@@ -37,6 +37,7 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
+    
     public AddCommand(String name,
                       String phone, boolean isPhonePrivate,
                       String email, boolean isEmailPrivate,
@@ -66,7 +67,7 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute() {
         try {
-            addressBook.addPerson(toAdd);
+            addressBook.addPerson(toAdd); 
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
