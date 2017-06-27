@@ -90,7 +90,7 @@ public class Main {
             CommandResult result = executeCommand(command);
             recordResult(result);
             ui.showResultToUser(result);
-            //lol
+            //list Addressbook after add/delete command
             if(command instanceof AddCommand || command instanceof DeleteCommand){
             command2 = new Parser().parseCommand("list");
             CommandResult result2 = executeCommand(command2);
