@@ -6,7 +6,7 @@ package seedu.addressbook.commands;
  */
 public class IncorrectCommand extends Command {
 
-    public final String feedbackToUser;
+    private final String feedbackToUser;
 
     public IncorrectCommand(String feedbackToUser) {
         this.feedbackToUser = feedbackToUser;
@@ -15,6 +15,11 @@ public class IncorrectCommand extends Command {
     @Override
     public CommandResult execute() {
         return new CommandResult(feedbackToUser);
+    }
+    
+    /** Returns the feedback message to be shown to the user*/
+    public String getFeedbackToUser(){
+    	return feedbackToUser;
     }
 
 }
