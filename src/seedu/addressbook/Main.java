@@ -4,12 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
-import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
-import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
@@ -90,14 +87,7 @@ public class Main {
             CommandResult result = executeCommand(command);
             recordResult(result);
             ui.showResultToUser(result);
-            
-            if (command instanceof AddCommand || command instanceof DeleteCommand) {
-            	Command listCommand = new ListCommand();
-            	CommandResult listCommandResult = executeCommand(listCommand);
-            	recordResult(listCommandResult);
-            	ui.showResultToUser(listCommandResult);
-            }
-            
+
         } while (!ExitCommand.isExit(command));
     }
 
