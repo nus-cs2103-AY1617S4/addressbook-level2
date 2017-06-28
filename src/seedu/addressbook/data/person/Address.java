@@ -1,13 +1,14 @@
 package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.Contact;
 import java.util.ArrayList;
 
 /**
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address extends Contact {
 
     public static final String EXAMPLE = "123, Clementi Ave 3, #12-34, 231534";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Addresses must be in the format \"BLOCK, STREET, UNIT[optional], POSTAL_CODE[optional]\"";
@@ -26,9 +27,6 @@ public class Address {
     private static final String POSTAL_CODE_VALIDATION_REGEX = "\\d+"; // postal code is nonempty mixture of digits
 
     private String[] addrFields;
-
-    private final String value;
-    private boolean isPrivate;
 
     /**
      * Validates given address.
@@ -79,24 +77,10 @@ public class Address {
     }
 
     @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Address // instanceof handles nulls
                 && this.value.equals(((Address) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
     }
 
     /**
