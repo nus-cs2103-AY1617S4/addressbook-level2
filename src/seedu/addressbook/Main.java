@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -87,9 +89,20 @@ public class Main {
             CommandResult result = executeCommand(command);
             recordResult(result);
             ui.showResultToUser(result);
-
+            checkEnhancedAddDeleteCommands(command);
+            	
+            
         } while (!ExitCommand.isExit(command));
     }
+
+	private void checkEnhancedAddDeleteCommands(Command command) {
+		if(command instanceof AddCommand || command instanceof DeleteCommand ){
+			Command listCommand = new Parser().parseCommand("list");
+			CommandResult result = executeCommand(listCommand);
+			recordResult(result);
+			ui.showResultToUser(result);
+		}
+	}
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */
     private void recordResult(CommandResult result) {
