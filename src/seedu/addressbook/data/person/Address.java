@@ -1,5 +1,8 @@
 package seedu.addressbook.data.person;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -9,11 +12,16 @@ import seedu.addressbook.data.exception.IllegalValueException;
 public class Address {
 
     public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
-    public static final String ADDRESS_VALIDATION_REGEX = ".+";
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Address is entered in the following format: BLOCK, STREET, UNIT, POSTAL_CODE ";
+    public static final String ADDRESS_VALIDATION_REGEX = "(\\w+)(, ([^,]+)?(, ([^,]+)?(, (\\d+))?)?)?";
 
     public final String value;
     private boolean isPrivate;
+    
+    private Block _block;
+    private Street _street;
+    private Unit _unit;
+    private PostalCode _postalCode;
 
     /**
      * Validates given address.
@@ -22,11 +30,21 @@ public class Address {
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         String trimmedAddress = address.trim();
-        this.isPrivate = isPrivate;
-        if (!isValidAddress(trimmedAddress)) {
+        Pattern parserPattern = Pattern.compile(ADDRESS_VALIDATION_REGEX);
+        Matcher parserMatcher = parserPattern.matcher(trimmedAddress);
+   
+        if (parserMatcher.find()) {
+        	_block = new Block(parserMatcher.group(1));
+        	_street = new Street(parserMatcher.group(3));
+        	_unit = new Unit(parserMatcher.group(5));
+        	_postalCode = new PostalCode(parserMatcher.group(7));
+        }
+        
+        else {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = trimmedAddress;
+        
+        value = _block.getValue() + ", " +  _street.getValue() + ", " + _unit.getValue() + ", " + _postalCode.getValue();
     }
 
     /**
@@ -56,4 +74,52 @@ public class Address {
     public boolean isPrivate() {
         return isPrivate;
     }
+}
+
+class Block {
+	private String _value;
+	
+	public Block(String value) {
+		_value = value;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+}
+
+class Street {
+private String _value;
+	
+	public Street(String value) {
+		_value = value;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+}
+
+class Unit {
+	private String _value;
+	
+	public Unit(String value) {
+		_value = value;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+}
+
+class PostalCode {
+private String _value;
+	
+	public PostalCode(String value) {
+		_value = value;
+	}
+
+	public String getValue() {
+		return _value;
+	}
 }
