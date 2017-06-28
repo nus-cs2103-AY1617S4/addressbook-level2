@@ -288,7 +288,7 @@ public class ParserTest {
                 + person.getName().fullName
                 + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
                 + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
-                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
+                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().toString();
         for (Tag tag : person.getTags()) {
             addCommand += " t/" + tag.tagName;
         }
@@ -305,7 +305,7 @@ public class ParserTest {
     private void parseAndAssertIncorrectWithMessage(String feedbackMessage, String... inputs) {
         for (String input : inputs) {
             final IncorrectCommand result = parseAndAssertCommandType(input, IncorrectCommand.class);
-            assertEquals(result.feedbackToUser, feedbackMessage);
+            assertEquals(result.getFeedbackToUser(), feedbackMessage);
         }
     }
 
