@@ -4,7 +4,10 @@ import java.util.List;
 
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
-
+/**
+ * Sort and List all persons alphabetically in the addressBook
+ * @author shuqi
+ */
 public class SortCommand extends Command {
 	
 	public static final String COMMAND_WORD = "sort";
