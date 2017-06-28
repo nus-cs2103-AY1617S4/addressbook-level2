@@ -47,7 +47,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public UniquePersonList(Person... persons) throws DuplicatePersonException {
         final List<Person> initialTags = Arrays.asList(persons);
-        if (!Utils.elementsAreUnique(initialTags)) {
+        if (!Utils.areElementsUnique(initialTags)) {
             throw new DuplicatePersonException();
         }
         internalList.addAll(initialTags);
@@ -59,7 +59,7 @@ public class UniquePersonList implements Iterable<Person> {
      * @throws DuplicatePersonException if the {@code persons} contains duplicate persons
      */
     public UniquePersonList(Collection<Person> persons) throws DuplicatePersonException {
-        if (!Utils.elementsAreUnique(persons)) {
+        if (!Utils.areElementsUnique(persons)) {
             throw new DuplicatePersonException();
         }
         internalList.addAll(persons);
