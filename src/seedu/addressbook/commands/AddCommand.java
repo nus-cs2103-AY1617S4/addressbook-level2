@@ -68,8 +68,9 @@ public class AddCommand extends Command {
     @Override
     public CommandResult execute() {
         try {
-        	System.out.println("THis executed");
             addressBook.addPerson(toAdd);
+            Person.increaseNextSequenceNumber();
+            System.out.print(toAdd.getSequenceNumber());
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
