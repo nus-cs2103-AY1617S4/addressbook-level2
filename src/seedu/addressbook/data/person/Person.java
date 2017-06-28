@@ -8,7 +8,7 @@ import java.util.Objects;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Person implements ReadOnlyPerson, Comparable<Person> {
 
     private Name name;
     private Phone phone;
@@ -82,6 +82,17 @@ public class Person implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsTextShowAll();
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        // TODO Auto-generated method stub
+        String name1 = this.getName().toString();
+        System.out.println(name1);
+        String name2 = o.getName().toString();
+        System.out.println(name2);
+        System.out.println(name1.compareTo(name2));
+        return (1);
     }
 
 }
