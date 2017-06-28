@@ -10,9 +10,9 @@ import seedu.addressbook.data.tag.UniqueTagList;
 public interface ReadOnlyPerson {
 
     Name getName();
-    Contact getPhone();
+    Phone getPhone();
     Email getEmail();
-    Contact getAddress();
+    Address getAddress();
 
     /**
      * Returns a new TagList that is a deep copy of the internal TagList,

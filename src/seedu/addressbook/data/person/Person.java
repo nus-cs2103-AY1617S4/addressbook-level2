@@ -11,15 +11,15 @@ import java.util.Objects;
 public class Person implements ReadOnlyPerson {
 
     private Name name;
-    private Contact phone;
+    private Phone phone;
     private Email email;
-    private Contact address;
+    private Address address;
 
     private final UniqueTagList tags;
     /**
      * Assumption: Every field must be present and not null.
      */
-    public Person(Name name, Contact phone, Email email, Contact address, UniqueTagList tags) {
+    public Person(Name name, Phone phone, Email email, Address address, UniqueTagList tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -40,7 +40,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Contact getPhone() {
+    public Phone getPhone() {
         return phone;
     }
 
@@ -50,7 +50,7 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
-    public Contact getAddress() {
+    public Address getAddress() {
         return address;
     }
 
