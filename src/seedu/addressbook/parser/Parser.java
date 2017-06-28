@@ -15,6 +15,7 @@ import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.EditCommand;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.HelpCommand;
@@ -41,7 +42,24 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
+    
+    public static final Pattern PERSON_EDIT_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile("(?<targetIndex>.+)" 
+                    + " (?<isNamePrivate>p?)n/(?<name>[^/]+)"
+                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
+                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
+                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
+                    + "(?<tagArguments>(?: t/[^/]+)*)");
+    
+    public static final Pattern PERSON_PHONE_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile(" (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"); 
+    
+    public static final Pattern PERSON_EMAIL_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile(" (?<isEmailPrivate>p?)e/(?<email>[^/]+)"); 
+    
+    public static final Pattern PERSON_ADDRESSL_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile(" (?<isAddressPrivate>p?)a/(?<address>[^/]+)"); 
+    
 
     /**
      * Signals that the user input could not be parsed.
@@ -78,6 +96,9 @@ public class Parser {
 
         case AddCommand.COMMAND_WORD:
             return prepareAdd(arguments);
+        
+        case EditCommand.COMMAND_WORD:
+            return prepareEdit(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
@@ -140,6 +161,45 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
+    
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args){
+        final Matcher matcher = PERSON_EDIT_DATA_ARGS_FORMAT.matcher(args.trim());
+       
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        
+        try {
+            int targetIndex = parseArgsAsDisplayedIndex(matcher.group("targetIndex"));
+            try {
+                return new EditCommand(
+                        targetIndex,
+                        matcher.group("name"),
+                        matcher.group("phone"),
+                        isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
+                        matcher.group("email"),
+                        isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
+                        matcher.group("address"),
+                        isPrivatePrefixPresent(matcher.group("isAddressPrivate"))
+                );
+            } catch (IllegalValueException e) {
+                // TODO Auto-generated catch block
+                return new IncorrectCommand(e.getMessage());
+            }
+            
+        } catch (ParseException pe) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        } catch (NumberFormatException nfe) {
+            return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+      
+    }
 
     /**
      * Returns true if the private prefix is present for a contact detail in the add command's arguments string.
@@ -161,7 +221,7 @@ public class Parser {
         final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
         return new HashSet<>(tagStrings);
     }
-
+    
 
     /**
      * Parses arguments in the context of the delete person command.
@@ -233,6 +293,8 @@ public class Parser {
         }
         return Integer.parseInt(matcher.group("targetIndex"));
     }
+    
+
 
 
     /**
