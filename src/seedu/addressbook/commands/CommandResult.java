@@ -17,7 +17,7 @@ public class CommandResult {
     private final List<? extends ReadOnlyPerson> relevantPersons;
 
     /** The feedback message to be shown to the user. Contains a description of the execution result */
-    public String giveFeedbackToUser() {
+    public String getFeedbackToUser() {
     	return feedbackToUser;
     }
     public CommandResult(String feedbackToUser) {

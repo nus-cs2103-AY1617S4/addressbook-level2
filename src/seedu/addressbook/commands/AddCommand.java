@@ -71,7 +71,7 @@ public class AddCommand extends Command {
             addressBook.addPerson(toAdd);
             List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
             CommandResult message = new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-            System.out.println('\n'+message.giveFeedbackToUser()+'\n');
+            System.out.println('\n'+message.getFeedbackToUser()+'\n');
             return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
             
         } catch (UniquePersonList.DuplicatePersonException dpe) {
