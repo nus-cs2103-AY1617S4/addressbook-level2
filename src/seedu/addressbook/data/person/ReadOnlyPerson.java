@@ -13,7 +13,8 @@ public interface ReadOnlyPerson {
     Phone getPhone();
     Email getEmail();
     Address getAddress();
-
+    int getSequenceNumber();
+    
     /**
      * Returns a new TagList that is a deep copy of the internal TagList,
      * changes on the returned list will not affect the person's internal tags.
@@ -70,6 +71,7 @@ public interface ReadOnlyPerson {
         for (Tag tag : getTags()) {
             builder.append(tag);
         }
+        builder.append(" Sequence Number: ").append(String.valueOf(getSequenceNumber()));
         return builder.toString();
     }
 
@@ -92,6 +94,7 @@ public interface ReadOnlyPerson {
         for (Tag tag : getTags()) {
             builder.append(tag);
         }
+        builder.append(" Sequence Number: ").append(String.valueOf(getSequenceNumber()));
         return builder.toString();
     }
 }
