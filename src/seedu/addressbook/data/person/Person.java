@@ -14,6 +14,9 @@ public class Person implements ReadOnlyPerson {
     private Phone phone;
     private Email email;
     private Address address;
+    
+    public int sequenceNumber;
+    public static int nextSequenceNumber;
 
     private final UniqueTagList tags;
     /**
@@ -33,7 +36,7 @@ public class Person implements ReadOnlyPerson {
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
     }
-
+    
     @Override
     public Name getName() {
         return name;
