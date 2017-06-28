@@ -14,7 +14,6 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.commands.ListCommand;
 
 /**
  * Adds a person to the address book.
