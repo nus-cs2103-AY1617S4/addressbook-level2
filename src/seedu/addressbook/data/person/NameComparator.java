@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class NameComparator implements Comparator<Person> {
 	public int compare(Person firstPerson, Person secondPerson) {
-		return firstPerson.getName().fullName.compareTo(secondPerson.getName().fullName);
+		return firstPerson.compareName(secondPerson);
 	}
 
 	public boolean equals(Person firstPerson, Person secondPerson) {

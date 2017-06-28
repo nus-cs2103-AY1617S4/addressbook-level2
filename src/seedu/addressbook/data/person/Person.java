@@ -83,5 +83,9 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsTextShowAll();
     }
-
+    
+    public int compareName(Person otherPerson){
+    	return this.name.compareTo(otherPerson.getName());
+    }
+    
 }

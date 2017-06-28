@@ -59,5 +59,8 @@ public class Name {
     public int hashCode() {
         return fullName.hashCode();
     }
-
+    
+    public int compareTo(Name otherName){
+    	return this.fullName.compareTo(otherName.fullName);
+    }
 }
