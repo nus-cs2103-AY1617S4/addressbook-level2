@@ -57,6 +57,16 @@ public class Parser {
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     public Parser() {}
+    
+    public String getCommandString(String userInput){
+    	final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            return "Invalid Input";
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        return commandWord;
+    }
 
     /**
      * Parses user input into command for execution.
