@@ -15,19 +15,12 @@ import java.util.Scanner;
 
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.ui.Formatter;
 
 /**
  * Text UI of the application.
  */
 public class TextUi {
-
-    /** A decorative prefix added to the beginning of lines printed by AddressBook */
-    private static final String LINE_PREFIX = "|| ";
-
-    /** A platform independent line separator. */
-    private static final String LS = System.lineSeparator();
-
-    private static final String DIVIDER = "===================================================";
 
     /** Format of indexed list item */
     private static final String MESSAGE_INDEXED_LIST_ITEM = "\t%1$d. %2$s";
@@ -37,7 +30,7 @@ public class TextUi {
     public static final int DISPLAYED_INDEX_OFFSET = 1;
 
     /** Format of a comment input line. Comment lines are silently consumed when reading user input. */
-    private static final String COMMENT_LINE_FORMAT_REGEX = "#.*";
+    private static final String COMMENT_LINE_FORMAT_REGEX = "#.*"; // #[0 or more of any character]
 
     private final Scanner in;
     private final PrintStream out;
@@ -79,7 +72,7 @@ public class TextUi {
      * @return command (full line) entered by the user
      */
     public String getUserCommand() {
-        out.print(LINE_PREFIX + "Enter command: ");
+        showSingleLineToUser("Enter command: ");
         String fullInputLine = in.nextLine();
 
         // silently consume all ignored lines
@@ -91,32 +84,36 @@ public class TextUi {
         return fullInputLine;
     }
 
-
     public void showWelcomeMessage(String version, String storageFilePath) {
         String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
         showToUser(
-                DIVIDER,
-                DIVIDER,
+                Formatter.getDivider(),
+                Formatter.getDivider(),
                 MESSAGE_WELCOME,
                 version,
                 MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE,
                 storageFileInfo,
-                DIVIDER);
+                Formatter.getDivider());
     }
 
     public void showGoodbyeMessage() {
-        showToUser(MESSAGE_GOODBYE, DIVIDER, DIVIDER);
+        showToUser(MESSAGE_GOODBYE, Formatter.getDivider(), Formatter.getDivider());
     }
 
 
     public void showInitFailedMessage() {
-        showToUser(MESSAGE_INIT_FAILED, DIVIDER, DIVIDER);
+        showToUser(MESSAGE_INIT_FAILED, Formatter.getDivider(), Formatter.getDivider());
+    }
+
+    /** Shows single line to the user without return */
+    public void showSingleLineToUser(String message) {
+        out.print(Formatter.singleLineMessage(message));
     }
 
     /** Shows message(s) to the user */
     public void showToUser(String... message) {
         for (String m : message) {
-            out.println(LINE_PREFIX + m.replace("\n", LS + LINE_PREFIX));
+            out.println(Formatter.singleLineMessage(m));
         }
     }
 
@@ -129,7 +126,7 @@ public class TextUi {
         if (resultPersons.isPresent()) {
             showPersonListView(resultPersons.get());
         }
-        showToUser(result.feedbackMesssage(), DIVIDER);
+        showToUser(result.feedbackMesssage(), Formatter.getDivider());
     }
 
     /**
