@@ -14,6 +14,9 @@ public class Person implements ReadOnlyPerson {
     private Phone phone;
     private Email email;
     private Address address;
+    private int sequenceNumber; 
+    
+    private static int nextSequenceNumber=1;
 
     private final UniqueTagList tags;
     /**
@@ -25,6 +28,7 @@ public class Person implements ReadOnlyPerson {
         this.email = email;
         this.address = address;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+        this.sequenceNumber = nextSequenceNumber;
     }
 
     /**
@@ -59,6 +63,23 @@ public class Person implements ReadOnlyPerson {
         return new UniqueTagList(tags);
     }
 
+    //New method for T3A2
+    public int getSequenceNumber(){
+        return this.sequenceNumber;
+    }
+    public void setSequenceNumber(int num){
+        this.sequenceNumber = num;
+    }
+    public static void clearNextSequenceNumber(){
+        nextSequenceNumber = 1; 
+    }
+    public static void increaseNextSequenceNumber(){
+        nextSequenceNumber++;
+    }
+    public static int getNextSequenceNumber(){
+        return nextSequenceNumber;
+    }
+    //*****************
     /**
      * Replaces this person's tags with the tags in the argument tag list.
      */
