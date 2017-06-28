@@ -38,7 +38,7 @@ public class UtilsTest {
     }
 
     @Test
-    public void elementsAreUnique() throws Exception {
+    public void areElementsUnique() throws Exception {
         // empty list
         assertAreUnique();
 
@@ -63,10 +63,10 @@ public class UtilsTest {
     }
 
     private void assertAreUnique(Object... objects) {
-        assertTrue(Utils.elementsAreUnique(Arrays.asList(objects)));
+        assertTrue(Utils.areElementsUnique(Arrays.asList(objects)));
     }
 
     private void assertNotUnique(Object... objects) {
-        assertFalse(Utils.elementsAreUnique(Arrays.asList(objects)));
+        assertFalse(Utils.areElementsUnique(Arrays.asList(objects)));
     }
 }

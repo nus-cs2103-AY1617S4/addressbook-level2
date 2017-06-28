@@ -17,7 +17,7 @@ import seedu.addressbook.data.exception.DuplicateDataException;
  * A list of tags. Does not allow nulls or duplicates.
  *
  * @see Tag#equals(Object)
- * @see Utils#elementsAreUnique(Collection)
+ * @see Utils#areElementsUnique(Collection)
  */
 public class UniqueTagList implements Iterable<Tag> {
 
@@ -42,7 +42,7 @@ public class UniqueTagList implements Iterable<Tag> {
      */
     public UniqueTagList(Tag... tags) throws DuplicateTagException {
         final List<Tag> initialTags = Arrays.asList(tags);
-        if (!Utils.elementsAreUnique(initialTags)) {
+        if (!Utils.areElementsUnique(initialTags)) {
             throw new DuplicateTagException();
         }
         internalList.addAll(initialTags);
@@ -52,7 +52,7 @@ public class UniqueTagList implements Iterable<Tag> {
      * Constructs a tag list with the given tags.
      */
     public UniqueTagList(Collection<Tag> tags) throws DuplicateTagException {
-        if (!Utils.elementsAreUnique(tags)) {
+        if (!Utils.areElementsUnique(tags)) {
             throw new DuplicateTagException();
         }
         internalList.addAll(tags);

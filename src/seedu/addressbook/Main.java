@@ -21,6 +21,7 @@ import seedu.addressbook.ui.TextUi;
  * Initializes the application and starts the interaction with the user.
  */
 public class Main {
+	
 
     /** Version info of the program. */
     public static final String VERSION = "AddessBook Level 2 - Version 1.0";
@@ -122,8 +123,10 @@ public class Main {
      * @param launchArgs arguments supplied by the user at program launch
      * @throws InvalidStorageFilePathException if the target file path is incorrect.
      */
+	public final int EMPTY_ARRAY = 0;
+    
     private StorageFile initializeStorage(String[] launchArgs) throws InvalidStorageFilePathException {
-        boolean isStorageFileSpecifiedByUser = launchArgs.length > 0;
+        boolean isStorageFileSpecifiedByUser = launchArgs.length > EMPTY_ARRAY;
         return isStorageFileSpecifiedByUser ? new StorageFile(launchArgs[0]) : new StorageFile();
     }
 
