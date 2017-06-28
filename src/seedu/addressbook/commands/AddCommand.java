@@ -1,6 +1,7 @@
 package seedu.addressbook.commands;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.addressbook.data.exception.IllegalValueException;
@@ -70,6 +71,9 @@ public class AddCommand extends Command {
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
+        } finally{
+            List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
+            new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
         }
     }
 
