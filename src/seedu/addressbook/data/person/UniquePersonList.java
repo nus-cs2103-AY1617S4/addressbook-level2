@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class UniquePersonList implements Iterable<Person> {
     public UniquePersonList(UniquePersonList source) {
         internalList.addAll(source.internalList);
     }
-
+   
     /**
      * Returns an unmodifiable java List view with elements cast as immutable {@link ReadOnlyPerson}s.
      * For use with other methods/libraries.
@@ -81,6 +82,14 @@ public class UniquePersonList implements Iterable<Person> {
         return Collections.unmodifiableList(internalList);
     }
 
+    /**
+     * Returns unmodifiable java List view after sorting elements by name strings.
+     */
+    public List<ReadOnlyPerson> sortedImmutableListView(){
+    	NameComparator nameComparator = new NameComparator();
+    	Collections.sort(internalList,nameComparator);
+    	return Collections.unmodifiableList(internalList);
+    }
 
     /**
      * Checks if the list contains an equivalent person as the given argument.
@@ -140,4 +149,6 @@ public class UniquePersonList implements Iterable<Person> {
                 || (other instanceof UniquePersonList // instanceof handles nulls
                         && this.internalList.equals(((UniquePersonList) other).internalList));
     }
+    
+    
 }
