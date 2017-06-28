@@ -14,10 +14,12 @@ import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
+
 /**
  * Adds a person to the address book.
  */
 public class AddCommand extends Command {
+
 
     public static final String COMMAND_WORD = "add";
 
@@ -67,6 +69,8 @@ public class AddCommand extends Command {
     public CommandResult execute() {
         try {
             addressBook.addPerson(toAdd);
+            Person.increaseNextSequenceNumber();
+            System.out.print(toAdd.getSequenceNumber());
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
