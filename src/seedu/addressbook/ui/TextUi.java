@@ -116,7 +116,7 @@ public class TextUi {
     /** Shows message(s) to the user */
     public void showToUser(String... message) {
         for (String m : message) {
-            out.println(LINE_PREFIX + m.replace("\n", LS + LINE_PREFIX));
+            System.out.println(LINE_PREFIX + m.replace("\n", LS + LINE_PREFIX));
         }
     }
 
@@ -129,7 +129,7 @@ public class TextUi {
         if (resultPersons.isPresent()) {
             showPersonListView(resultPersons.get());
         }
-        showToUser(result.feedbackToUser, DIVIDER);
+        showToUser(result.getFeedbackToUser(), DIVIDER);
     }
 
     /**

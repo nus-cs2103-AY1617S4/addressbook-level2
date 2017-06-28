@@ -20,6 +20,7 @@ import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.HelpCommand;
 import seedu.addressbook.commands.IncorrectCommand;
 import seedu.addressbook.commands.ListCommand;
+import seedu.addressbook.commands.SortCommand;
 import seedu.addressbook.commands.ViewAllCommand;
 import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
@@ -57,6 +58,16 @@ public class Parser {
     public static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     public Parser() {}
+    
+    public String getCommandWordFromCommand(String userInput){
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            return MESSAGE_INVALID_COMMAND_FORMAT;
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        return commandWord;        
+    }
 
     /**
      * Parses user input into command for execution.
@@ -89,6 +100,9 @@ public class Parser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+            
+        case SortCommand.COMMAND_WORD:
+            return new SortCommand();
 
         case ViewCommand.COMMAND_WORD:
             return prepareView(arguments);
