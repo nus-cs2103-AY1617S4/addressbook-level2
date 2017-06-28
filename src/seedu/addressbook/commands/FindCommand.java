@@ -24,6 +24,9 @@ public class FindCommand extends Command {
     private final Set<String> keywords;
 
     public FindCommand(Set<String> keywords) {
+    	for ( String word : keywords ) {
+    		word = word.toLowerCase();
+    	}
         this.keywords = keywords;
     }
 

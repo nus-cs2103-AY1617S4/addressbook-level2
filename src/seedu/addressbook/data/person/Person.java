@@ -1,6 +1,7 @@
 package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.tag.UniqueTagList;
+import java.util.*;
 
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import java.util.Objects;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Person implements ReadOnlyPerson, Comparable<Person> {
 
     private Name name;
     private Phone phone;
@@ -38,20 +39,33 @@ public class Person implements ReadOnlyPerson {
     public Name getName() {
         return name;
     }
+    public void changeName(Name newName) {
+    	this.name = newName;
+    }
 
     @Override
     public Phone getPhone() {
         return phone;
+    }
+    public void changePhone(Phone newPhone) {
+    	this.phone = newPhone;
     }
 
     @Override
     public Email getEmail() {
         return email;
     }
+    public void changeEmail(Email newEmail) {
+    	this.email = newEmail;
+    }
 
     @Override
     public Address getAddress() {
         return address;
+    }
+    
+    public void getAddress(Address newAddress) {
+    	this.address = newAddress;
     }
 
     @Override
@@ -82,6 +96,11 @@ public class Person implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsTextShowAll();
+    }
+    public int compareTo(Person p1) {
+    	String currentPersonName = this.getName().fullName.toLowerCase();
+    	String comparedPersonName = p1.getName().fullName.toLowerCase();
+    	return currentPersonName.compareTo(comparedPersonName);
     }
 
 }
