@@ -4,9 +4,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
@@ -87,10 +89,23 @@ public class Main {
             CommandResult result = executeCommand(command);
             recordResult(result);
             ui.showResultToUser(result);
+            String commandWord = new Parser().getCommandWordFromCommand(userCommandText);
+            if(commandWord.equals(AddCommand.COMMAND_WORD)){
+                displayAllPerson();
+            }
 
         } while (!ExitCommand.isExit(command));
     }
 
+    /**
+     * Display all Lists all persons in the address book
+     * */
+    private void displayAllPerson(){
+        CommandResult listAllPerson = executeCommand(new ListCommand());
+        recordResult(listAllPerson);
+        ui.showResultToUser(listAllPerson);
+    }
+    
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */
     private void recordResult(CommandResult result) {
         final Optional<List<? extends ReadOnlyPerson>> personList = result.getRelevantPersons();

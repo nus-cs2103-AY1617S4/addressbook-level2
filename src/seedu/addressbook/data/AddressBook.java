@@ -82,6 +82,15 @@ public class AddressBook {
         allPersons.add(toAdd);
         syncTagsWithMasterList(toAdd);
     }
+    
+    /**
+     * Updates a person in the address book.
+     * 
+     * @throws ArrayIndexOutOfBoundsException if the index of Person does not exist.
+     */
+    public void updatePerson(int index, Person toSet) throws ArrayIndexOutOfBoundsException, DuplicatePersonException{
+        allPersons.set(index, toSet);
+    }
 
     /**
      * Returns true if an equivalent person exists in the address book.

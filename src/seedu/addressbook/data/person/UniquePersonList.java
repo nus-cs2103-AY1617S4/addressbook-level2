@@ -95,6 +95,21 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return false;
     }
+    
+    public boolean contains(ReadOnlyPerson toCheck, int targetIndex) {
+        Iterator<Person> internalListIterator = internalList.iterator();
+        int index = 0;
+        while (internalListIterator.hasNext()) {
+            Person currPerson = internalListIterator.next();
+            if(currPerson.isSamePerson(toCheck) && index != targetIndex){
+                return true;
+            }
+            index++;
+        }
+
+        return false;
+               
+    }
 
     /**
      * Adds a person to the list.
@@ -108,6 +123,17 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.add(toAdd);
+    }
+    
+    public void set(int index, Person toSet) throws ArrayIndexOutOfBoundsException, DuplicatePersonException{
+        if (contains(toSet, index)) {
+            throw new DuplicatePersonException();
+        }
+        if(index >= internalList.size() || index < 0){
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        internalList.set(index, toSet);
+        
     }
 
     /**
