@@ -77,6 +77,16 @@ public class Parser {
 
     public Parser() {}
 
+    public String getCommandWordFromCommand(String userInput){
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            return MESSAGE_INVALID_COMMAND_FORMAT;
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        return commandWord;        
+    }
+    
     /**
      * Parses user input into command for execution.
      *
