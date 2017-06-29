@@ -293,10 +293,7 @@ public class Parser {
         }
         return Integer.parseInt(matcher.group("targetIndex"));
     }
-    
-
-
-
+   
     /**
      * Parses arguments in the context of the find person command.
      *
