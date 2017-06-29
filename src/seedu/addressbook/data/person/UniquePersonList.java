@@ -121,14 +121,6 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
     }
-    
-    public void edit(int index, Person toEdit) throws PersonNotFoundException {
-    	final boolean personFound = internalList.contains(internalList.get(index-1));
-    	if (!personFound) {
-    		throw new PersonNotFoundException();
-    	}
-    	internalList.set(index-1, toEdit);
-    }
 
     /**
      * Clears all persons in list.
