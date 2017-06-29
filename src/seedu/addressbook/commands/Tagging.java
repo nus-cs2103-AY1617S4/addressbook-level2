@@ -6,6 +6,7 @@ import java.lang.StringBuilder;
 
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.tag.UniqueTagList;
+import seedu.addressbook.data.tag.UniqueTagList.DuplicateTagException;
 import seedu.addressbook.data.tag.Tag;
 
 /**
@@ -13,47 +14,62 @@ import seedu.addressbook.data.tag.Tag;
  */
 public class Tagging {
 
-    public static final boolean IS_ADD = true;
+    private static final boolean ADD = true;
 
     private final Person person;
-    private final Tag tagChanged;
+    private final Tag tag;
     private final boolean isAdd;
-
-    private boolean isSuccessful;
 
     private static final List<Tagging> taggings = new ArrayList<Tagging>();
     
     /**
-     * Constructor ensures that all fields are initialised
+     * Private constructor as this class should not be instantiated by the user.
      */
-    public Tagging(Person person, Tag tagChanged, boolean isAdd) {
+    private Tagging(Person person, Tag tag, boolean isAdd) {
         this.person = person;
-        this.tagChanged = tagChanged;
+        this.tag = tag;
         this.isAdd = isAdd;
-        executePersonTagModification();
-        if (isSuccessful) {
-            taggings.add(this);
+    }
+
+    /**
+     * Private helper function to instantiate a tagging history entry
+     * and add it to the taggings list
+     */
+    private static void addToTaggings(Person person, Tag tag, boolean isAdd) {
+        final Tagging tagging = new Tagging(person, tag, isAdd);
+        taggings.add(tagging);
+    }
+
+    /** 
+     * Executes the command to add a tag to a person.
+     *
+     * @return whether the tag was successfully added.
+     */
+    public static boolean executeAddTag(Person person, Tag tag) {
+        final UniqueTagList oldTagList = person.getTags();
+        try {
+            oldTagList.addAll(new UniqueTagList(tag));
+            person.setTags(oldTagList);
+            addToTaggings(person, tag, ADD);
+            return true;
+        } catch (DuplicateTagException exception) {
+            return false;
         }
     }
 
-    private void executePersonTagModification() {
+    /** 
+     * Executes the command to remove a tag from a person.
+     *
+     * @return whether the tag was successfully removed.
+     */
+    public static boolean executeRemoveTag(Person person, Tag tag) {
         final UniqueTagList oldTagList = person.getTags();
-        if (isAdd == IS_ADD) {
-            try {
-                oldTagList.addAll(new UniqueTagList(tagChanged));
-                isSuccessful = true;
-            } catch (DuplicateTagException exception) {
-                isSuccessful = false;
-            }
-        } else { // to remove
-            if (oldTagList.remove(tagChanged)) { // success
-                isSuccessful = true;
-            } else { // failure
-                isSuccessful = false;
-            }
-        }
-        if (isSuccessful) {
+        if (oldTagList.remove(tag)) {
             person.setTags(oldTagList);
+            addToTaggings(person, tag, !ADD);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -73,7 +89,7 @@ public class Tagging {
     }
 
     /**
-     * Helper function to format tag history entry as a single string
+     * Helper function to format tag single history entry as a whole string
      */
     public String getTagString() {
         final StringBuilder builder = new StringBuilder();
@@ -82,7 +98,7 @@ public class Tagging {
         builder.append(person.getName().toString());
         builder.append(" ");
         builder.append("[");
-        builder.append(tagChanged.tagName);
+        builder.append(tag.tagName);
         builder.append("]");
         return builder.toString();
     }
