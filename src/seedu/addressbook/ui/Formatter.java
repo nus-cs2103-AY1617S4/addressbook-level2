@@ -2,6 +2,9 @@ package seedu.addressbook.ui;
 
 import java.util.List;
 
+/**
+ * Formats text for display.
+ */
 public class Formatter {
 	
 	/** Offset required to convert between 1-indexing and 0-indexing.  */
