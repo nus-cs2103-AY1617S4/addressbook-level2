@@ -107,7 +107,12 @@ public class UniquePersonList implements Iterable<Person> {
         if (contains(toAdd)) {
             throw new DuplicatePersonException();
         }
+        //
         internalList.add(toAdd);
+        System.out.println("static seq bef inc: " + new Integer(Person.getNextSequenceNumber()).toString());
+        Person.increaseNextSeq();
+        System.out.println("static seq aft inc: " + new Integer(Person.getNextSequenceNumber()).toString());
+        //   
     }
 
     /**
