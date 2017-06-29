@@ -13,6 +13,7 @@ import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.storage.StorageFile.InvalidStorageFilePathException;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
+import seedu.addressbook.ui.Formatter;
 import seedu.addressbook.ui.TextUi;
 
 
@@ -25,6 +26,7 @@ public class Main {
     /** Version info of the program. */
     public static final String VERSION = "AddessBook Level 2 - Version 1.0";
 
+    private Formatter formatter;
     private TextUi ui;
     private StorageFile storage;
     private AddressBook addressBook;
@@ -55,10 +57,10 @@ public class Main {
             this.ui = new TextUi();
             this.storage = initializeStorage(launchArgs);
             this.addressBook = storage.load();
-            ui.showWelcomeMessage(VERSION, storage.getPath());
+            formatter.showWelcomeMessage(VERSION, storage.getPath());
 
         } catch (InvalidStorageFilePathException | StorageOperationException e) {
-            ui.showInitFailedMessage();
+            formatter.showInitFailedMessage();
             /*
              * ==============NOTE TO STUDENTS=========================================================================
              * We are throwing a RuntimeException which is an 'unchecked' exception. Unchecked exceptions do not need
@@ -74,7 +76,7 @@ public class Main {
 
     /** Prints the Goodbye message and exits. */
     private void exit() {
-        ui.showGoodbyeMessage();
+        formatter.showGoodbyeMessage();
         System.exit(0);
     }
 
@@ -86,7 +88,7 @@ public class Main {
             command = new Parser().parseCommand(userCommandText);
             CommandResult result = executeCommand(command);
             recordResult(result);
-            ui.showResultToUser(result);
+            formatter.showResultToUser(result);
 
         } while (!ExitCommand.isExit(command));
     }
