@@ -8,12 +8,19 @@ import java.util.Objects;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Person implements ReadOnlyPerson, Comparable<Person>{
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private int sequenceNumber;
+    private static int nextSequenceNumber = 1;
+    
+    public int compareTo(Person other){
+    	return this.getName().toString().compareTo(other.getName().toString());
+    }
+ 
 
     private final UniqueTagList tags;
     /**
@@ -24,6 +31,8 @@ public class Person implements ReadOnlyPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.sequenceNumber = nextSequenceNumber;
+        nextSequenceNumber ++; 
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
