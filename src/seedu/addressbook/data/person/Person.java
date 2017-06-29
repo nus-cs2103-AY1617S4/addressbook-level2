@@ -14,6 +14,8 @@ public class Person implements ReadOnlyPerson, Comparable<Person>{
     private Phone phone;
     private Email email;
     private Address address;
+    private int sequenceNumber;
+    private static int nextSequenceNumber = 1;
     
     public int compareTo(Person other){
     	return this.getName().toString().compareTo(other.getName().toString());
@@ -29,6 +31,8 @@ public class Person implements ReadOnlyPerson, Comparable<Person>{
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.sequenceNumber = nextSequenceNumber;
+        nextSequenceNumber ++; 
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
