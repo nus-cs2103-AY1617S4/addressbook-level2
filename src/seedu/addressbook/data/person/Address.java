@@ -11,7 +11,15 @@ public class Address {
     public static final String EXAMPLE = "123, some street";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
-
+    
+    public static final int ADDRESS_BLOCK_INDEX = 0;
+    public static final int ADDRESS_STREET_INDEX = 1;
+    public static final int ADDRESS_UNIT_INDEX = 2;
+    public static final int ADDRESS_CODE_INDEX = 3;
+    
+    public static final String ADDRESS_SPLIT_REGEX = ",";
+    
+    
     private Block block;
     private Street street;
     private Unit unit;
@@ -33,14 +41,12 @@ public class Address {
         }
         this.value = trimmedAddress;
         		
-        String[] addressBySections = trimmedAddress.split(",");
-        if (addressBySections.length == 4) {
-        	this.setBlock(new Block(addressBySections[0]));
-        	this.setStreet(new Street(addressBySections[1]));
-        	this.setUnit(new Unit(addressBySections[2]));
-        	this.setCode(new postalCode(addressBySections[3]));
+        String[] addressBySections = trimmedAddress.split(ADDRESS_SPLIT_REGEX);
+        this.setBlock(new Block(addressBySections[ADDRESS_BLOCK_INDEX]));
+        this.setStreet(new Street(addressBySections[ADDRESS_STREET_INDEX]));
+        this.setUnit(new Unit(addressBySections[ADDRESS_UNIT_INDEX]));
+        this.setCode(new postalCode(addressBySections[ADDRESS_CODE_INDEX]));
         }
-    }
 
     /**
      * Returns true if a given string is a valid person address.
