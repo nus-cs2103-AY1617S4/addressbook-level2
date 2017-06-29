@@ -45,7 +45,7 @@ public class Address {
     		street = new Street("");
     	}
     	if (addressComponents.length > 2){
-    		unit = new Unit(addressComponents[2].trim())
+    		unit = new Unit(addressComponents[2].trim());
     	}
     	else{
     		unit = new Unit("");
