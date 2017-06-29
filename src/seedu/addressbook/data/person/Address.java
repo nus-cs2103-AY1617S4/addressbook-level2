@@ -8,14 +8,11 @@ import java.util.regex.Pattern;
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address extends Contact {
 
     public static final String EXAMPLE = "123, some street";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Address is entered in the following format: BLOCK, STREET, UNIT, POSTAL_CODE ";
     public static final String ADDRESS_VALIDATION_REGEX = "(\\w+)(, ([^,]+)?(, ([^,]+)?(, (\\d+))?)?)?";
-
-    public final String value;
-    private boolean isPrivate;
     
     private Block block;
     private Street street;
@@ -28,8 +25,10 @@ public class Address {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
-        String trimmedAddress = address.trim();
-        
+    	
+    	String trimmedAddress = address.trim();
+    	super.isPrivate = isPrivate;
+    	
         Pattern parserPattern = Pattern.compile(ADDRESS_VALIDATION_REGEX);
         Matcher parserMatcher = parserPattern.matcher(trimmedAddress);
 
@@ -53,25 +52,12 @@ public class Address {
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
-    @Override
-    public String toString() {
-    	return value;
-    }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Address // instanceof handles nulls
                 && this.value.equals(((Address) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return this.value.hashCode();
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
     }
 }
 
