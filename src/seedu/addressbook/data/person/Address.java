@@ -1,19 +1,23 @@
 package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.exception.IllegalValueException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address extends Contact {
 
     public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
-    public static final String ADDRESS_VALIDATION_REGEX = ".+";
-
-    public final String value;
-    private boolean isPrivate;
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Address is entered in the following format: BLOCK, STREET, UNIT, POSTAL_CODE ";
+    public static final String ADDRESS_VALIDATION_REGEX = "(\\w+)(, ([^,]+)?(, ([^,]+)?(, (\\d+))?)?)?";
+    
+    private Block block;
+    private Street street;
+    private Unit unit;
+    private PostalCode postalCode;
 
     /**
      * Validates given address.
@@ -21,12 +25,24 @@ public class Address {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
-        String trimmedAddress = address.trim();
-        this.isPrivate = isPrivate;
-        if (!isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+    	
+    	String trimmedAddress = address.trim();
+    	super.isPrivate = isPrivate;
+    	
+        Pattern parserPattern = Pattern.compile(ADDRESS_VALIDATION_REGEX);
+        Matcher parserMatcher = parserPattern.matcher(trimmedAddress);
+
+        if (parserMatcher.find()) {
+           block = new Block(parserMatcher.group(1));
+           street = new Street(parserMatcher.group(3));
+           unit = new Unit(parserMatcher.group(5));
+           postalCode = new PostalCode(parserMatcher.group(7));
         }
-        this.value = trimmedAddress;
+        else {
+           throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        
+        value = block.getValue() + ", " +  street.getValue() + ", " + unit.getValue() + ", " + postalCode.getValue();
     }
 
     /**
@@ -36,10 +52,6 @@ public class Address {
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
-    @Override
-    public String toString() {
-        return value;
-    }
 
     @Override
     public boolean equals(Object other) {
@@ -47,13 +59,50 @@ public class Address {
                 || (other instanceof Address // instanceof handles nulls
                 && this.value.equals(((Address) other).value)); // state check
     }
+}
 
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-    public boolean isPrivate() {
-        return isPrivate;
-    }
+class Block {
+	 private String value;
+	 
+	 public Block(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
+}
+class Street {
+	 private String value;
+	 
+	 public Street(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
+}
+class Unit {
+	 private String value;
+	 
+	 public Unit(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
+}
+	 
+class PostalCode {
+	 private String value;
+	 
+	 public PostalCode(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
 }
