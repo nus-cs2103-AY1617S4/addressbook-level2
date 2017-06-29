@@ -3,6 +3,7 @@ package seedu.addressbook.commands;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +43,9 @@ public class FindCommand extends Command {
 
     /**
      * Retrieves all persons in the address book whose names contain some of the specified keywords.
+     * Features:
+     * 1. Case-insensitive
+     * 2. Partial search
      *
      * @param keywords for searching
      * @return list of persons found
@@ -49,12 +53,35 @@ public class FindCommand extends Command {
     private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
-            final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
-                matchedPersons.add(person);
-            }
+            Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
+            compareSets(keywords, wordsInName, matchedPersons, person);
         }
         return matchedPersons;
     }
+
+    /**
+     * Iterates through the sets of Strings and finds recurring Strings, then updates matchedPersons.
+     * 
+     * @param sets of strings to compare
+     * 
+     */
+	private void compareSets(Set<String> keywords, Set<String> wordsToSearch, final List<ReadOnlyPerson> matchedPersons,
+			ReadOnlyPerson person) {
+		Iterator<String> keyIter = keywords.iterator();
+		while(keyIter.hasNext()) {
+			String key = uncapitalise(keyIter.next());
+			Iterator<String> wordsIter = wordsToSearch.iterator();
+			while(wordsIter.hasNext()) {
+				String word = uncapitalise(wordsIter.next());
+				if (word.contains(key)) {
+					matchedPersons.add(person);
+				}
+			}
+		}
+	}
+
+	private String uncapitalise(String str) {
+		return str.toLowerCase();
+	}
 
 }
