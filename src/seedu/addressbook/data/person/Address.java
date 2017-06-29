@@ -11,9 +11,22 @@ public class Address {
     public static final String EXAMPLE = "123, some street";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
-
-    public final String value;
+    
+    public static final int ADDRESS_BLOCK_INDEX = 0;
+    public static final int ADDRESS_STREET_INDEX = 1;
+    public static final int ADDRESS_UNIT_INDEX = 2;
+    public static final int ADDRESS_CODE_INDEX = 3;
+    
+    public static final String ADDRESS_SPLIT_REGEX = ",";
+    
+    
+    private Block block;
+    private Street street;
+    private Unit unit;
+    private postalCode code;
     private boolean isPrivate;
+    
+    public String value;
 
     /**
      * Validates given address.
@@ -27,7 +40,13 @@ public class Address {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
         this.value = trimmedAddress;
-    }
+        		
+        String[] addressBySections = trimmedAddress.split(ADDRESS_SPLIT_REGEX);
+        this.setBlock(new Block(addressBySections[ADDRESS_BLOCK_INDEX]));
+        this.setStreet(new Street(addressBySections[ADDRESS_STREET_INDEX]));
+        this.setUnit(new Unit(addressBySections[ADDRESS_UNIT_INDEX]));
+        this.setCode(new postalCode(addressBySections[ADDRESS_CODE_INDEX]));
+        }
 
     /**
      * Returns true if a given string is a valid person address.
@@ -56,4 +75,36 @@ public class Address {
     public boolean isPrivate() {
         return isPrivate;
     }
+
+	public Block getBlock() {
+		return block;
+	}
+
+	public void setBlock(Block block) {
+		this.block = block;
+	}
+
+	public Street getStreet() {
+		return street;
+	}
+
+	public void setStreet(Street street) {
+		this.street = street;
+	}
+
+	public postalCode getCode() {
+		return code;
+	}
+
+	public void setCode(postalCode code) {
+		this.code = code;
+	}
+
+	public Unit getUnit() {
+		return unit;
+	}
+
+	public void setUnit(Unit unit) {
+		this.unit = unit;
+	}
 }

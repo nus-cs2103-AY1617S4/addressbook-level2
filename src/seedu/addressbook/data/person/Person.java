@@ -38,20 +38,33 @@ public class Person implements ReadOnlyPerson {
     public Name getName() {
         return name;
     }
+    public void changeName(Name newName) {
+    	this.name = newName;
+    }
 
     @Override
     public Phone getPhone() {
         return phone;
+    }
+    public void changePhone(Phone newPhone) {
+    	this.phone = newPhone;
     }
 
     @Override
     public Email getEmail() {
         return email;
     }
+    public void changeEmail(Email newEmail) {
+    	this.email = newEmail;
+    }
 
     @Override
     public Address getAddress() {
         return address;
+    }
+    
+    public void getAddress(Address newAddress) {
+    	this.address = newAddress;
     }
 
     @Override
