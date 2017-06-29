@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArrayList;
 
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -81,6 +82,11 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         allPersons.add(toAdd);
         syncTagsWithMasterList(toAdd);
+    }
+    
+    public void editPerson(int index, Person toEdit) throws PersonNotFoundException {
+    	allPersons.edit(index, toEdit);
+    	syncTagsWithMasterList(toEdit);
     }
 
     /**
