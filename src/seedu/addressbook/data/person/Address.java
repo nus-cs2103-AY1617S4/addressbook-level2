@@ -1,6 +1,8 @@
 package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.exception.IllegalValueException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Represents a Person's address in the address book.
@@ -9,11 +11,16 @@ import seedu.addressbook.data.exception.IllegalValueException;
 public class Address {
 
     public static final String EXAMPLE = "123, some street";
-    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
-    public static final String ADDRESS_VALIDATION_REGEX = ".+";
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Address is entered in the following format: BLOCK, STREET, UNIT, POSTAL_CODE ";
+    public static final String ADDRESS_VALIDATION_REGEX = "(\\w+)(, ([^,]+)?(, ([^,]+)?(, (\\d+))?)?)?";
 
     public final String value;
     private boolean isPrivate;
+    
+    private Block block;
+    private Street street;
+    private Unit unit;
+    private PostalCode postalCode;
 
     /**
      * Validates given address.
@@ -22,11 +29,21 @@ public class Address {
      */
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         String trimmedAddress = address.trim();
-        this.isPrivate = isPrivate;
-        if (!isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        
+        Pattern parserPattern = Pattern.compile(ADDRESS_VALIDATION_REGEX);
+        Matcher parserMatcher = parserPattern.matcher(trimmedAddress);
+
+        if (parserMatcher.find()) {
+           block = new Block(parserMatcher.group(1));
+           street = new Street(parserMatcher.group(3));
+           unit = new Unit(parserMatcher.group(5));
+           postalCode = new PostalCode(parserMatcher.group(7));
         }
-        this.value = trimmedAddress;
+        else {
+           throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        
+        value = block.getValue() + ", " +  street.getValue() + ", " + unit.getValue() + ", " + postalCode.getValue();
     }
 
     /**
@@ -38,7 +55,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return value;
+    	return value;
     }
 
     @Override
@@ -50,10 +67,56 @@ public class Address {
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return this.value.hashCode();
     }
 
     public boolean isPrivate() {
         return isPrivate;
     }
+}
+
+class Block {
+	 private String value;
+	 
+	 public Block(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
+}
+class Street {
+	 private String value;
+	 
+	 public Street(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
+}
+class Unit {
+	 private String value;
+	 
+	 public Unit(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
+}
+	 
+class PostalCode {
+	 private String value;
+	 
+	 public PostalCode(String value) {
+		this.value = value;
+	}
+	
+	 public String getValue() {
+		return value;
+	}
 }

@@ -14,7 +14,9 @@ import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.storage.StorageFile.InvalidStorageFilePathException;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
 import seedu.addressbook.ui.TextUi;
-
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.ListCommand;
 
 /**
  * Entry point of the Address Book application.
@@ -81,12 +83,21 @@ public class Main {
     /** Reads the user command and executes it, until the user issues the exit command.  */
     private void runCommandLoopUntilExitCommand() {
         Command command;
+        Command listCommandAfterAddOrDelete;
+        String list = "list";
         do {
             String userCommandText = ui.getUserCommand();
             command = new Parser().parseCommand(userCommandText);
             CommandResult result = executeCommand(command);
             recordResult(result);
             ui.showResultToUser(result);
+            
+            if (command instanceof AddCommand || command instanceof DeleteCommand) {
+            	 listCommandAfterAddOrDelete = new Parser().parseCommand(list);   	 
+            	 CommandResult listCommandResult = executeCommand(listCommandAfterAddOrDelete);
+            	 recordResult(listCommandResult);
+            	 ui.showResultToUser(listCommandResult);
+            }
 
         } while (!ExitCommand.isExit(command));
     }
