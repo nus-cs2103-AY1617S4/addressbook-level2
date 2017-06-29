@@ -14,6 +14,17 @@ public class Person implements ReadOnlyPerson {
     private Phone phone;
     private Email email;
     private Address address;
+    
+    /**
+     * Keeps track of the order in which Person objects were created
+     * Deletions are ignored
+     * Start the sequence from 1
+     * Known issue: 2 Person objects seems to have been created when initializing the address book
+     * Known issue: nextSequenceNumber still increases when a duplicate person error has been shown
+     * These issues were found using the println method
+     */
+    private static int nextSequenceNumber = 1;
+    private int sequenceNumber;
 
     private final UniqueTagList tags;
     /**
@@ -25,6 +36,8 @@ public class Person implements ReadOnlyPerson {
         this.email = email;
         this.address = address;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+        sequenceNumber = nextSequenceNumber;
+        nextSequenceNumber ++;
     }
 
     /**
@@ -32,6 +45,8 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+        sequenceNumber = nextSequenceNumber;
+        nextSequenceNumber ++;
     }
 
     @Override
@@ -82,6 +97,14 @@ public class Person implements ReadOnlyPerson {
     @Override
     public String toString() {
         return getAsTextShowAll();
+    }
+    
+    public int getSequenceNumber(){
+        return sequenceNumber;
+    }
+    
+    public static int getNextSequenceNumber(){
+        return nextSequenceNumber;
     }
 
 }
