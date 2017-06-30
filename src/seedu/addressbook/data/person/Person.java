@@ -14,6 +14,8 @@ public class Person implements ReadOnlyPerson {
     private Phone phone;
     private Email email;
     private Address address;
+    private int sequenceNumber;
+    private static int nextSequenceNumber = 0;
 
     private final UniqueTagList tags;
     /**
@@ -24,6 +26,7 @@ public class Person implements ReadOnlyPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.sequenceNumber = ++nextSequenceNumber;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -53,10 +56,14 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address;
     }
-
+    
     @Override
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
+    }
+    
+    public int getSequenceNumber() {
+        return sequenceNumber;
     }
 
     /**
