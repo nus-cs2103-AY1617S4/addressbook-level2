@@ -2,36 +2,40 @@ package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.exception.IllegalValueException;
 
+/**
+ * Represents a Person's contact in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidContact(String)}
+ */
 public class Contact {
-    public static String EXAMPLE;
-    public static String MESSAGE_CONTACT_CONSTRAINTS;
-    public static String ADDRESS_VALIDATION_REGEX;
+    public static String example;
+    public static String messageContactConstraints;
+    public static String addressValidationRegex;
 
     public final String value;
     private boolean isPrivate;
 
     /**
-     * Validates given address.
+     * Validates given Contact.
      *
-     * @throws IllegalValueException if given address string is invalid.
+     * @throws IllegalValueException if given contact string is invalid.
      */
     public Contact(String contact, boolean isPrivate, String example, String message, String regex) throws IllegalValueException {
-        EXAMPLE = example;
-        MESSAGE_CONTACT_CONSTRAINTS = message;
-        ADDRESS_VALIDATION_REGEX = regex;
+        Contact.example = example;
+        Contact.messageContactConstraints = message;
+        Contact.addressValidationRegex = regex;
         this.isPrivate = isPrivate;
         String trimmedContact = contact.trim();
         if (!isValidContact(trimmedContact)) {
-            throw new IllegalValueException(MESSAGE_CONTACT_CONSTRAINTS);
+            throw new IllegalValueException(messageContactConstraints);
         }
         this.value = trimmedContact;
     }
     
     /**
-     * Returns true if a given string is a valid person address.
+     * Returns true if a given string is a valid person contact.
      */
     public static boolean isValidContact(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+        return test.matches(addressValidationRegex);
     }
 
     @Override
