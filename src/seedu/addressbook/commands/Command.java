@@ -6,7 +6,8 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.util.List;
 
-import static seedu.addressbook.ui.TextUi.DISPLAYED_INDEX_OFFSET;
+//import static seedu.addressbook.ui.TextUi.DISPLAYED_INDEX_OFFSET;
+import seedu.addressbook.ui.TextUi;
 
 /**
  * Represents an executable command.
@@ -55,7 +56,7 @@ public abstract class Command {
      * @throws IndexOutOfBoundsException if the target index is out of bounds of the last viewed listing
      */
     protected ReadOnlyPerson getTargetPerson() throws IndexOutOfBoundsException {
-        return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
+        return relevantPersons.get(getTargetIndex() - TextUi.DISPLAYED_INDEX_OFFSET);
     }
 
     public int getTargetIndex() {
