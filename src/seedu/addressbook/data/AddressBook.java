@@ -1,5 +1,6 @@
 package seedu.addressbook.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -11,6 +12,7 @@ import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.Tagging;
 import seedu.addressbook.data.tag.UniqueTagList;
 
 /**
@@ -24,6 +26,7 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
+    private ArrayList<Tagging> allTagging;
 
     /**
      * Creates an empty address book.
@@ -31,6 +34,7 @@ public class AddressBook {
     public AddressBook() {
         allPersons = new UniquePersonList();
         allTags = new UniqueTagList();
+        allTagging = new ArrayList<Tagging>();
     }
 
     /**
@@ -70,6 +74,26 @@ public class AddressBook {
         }
         person.setTags(new UniqueTagList(commonTagReferences));
     }
+    /**
+     * Ensures that every tag in this person is included in main Tagging List as added Tags
+     * @param person
+     */
+    private void updateAddedTags(Person person) {
+    	String add = "+";
+    	final UniqueTagList personTags = person.getTags();
+    	Set<Tag> tagList= personTags.toSet();
+    	for ( Tag tag: tagList ) {
+    		allTagging.add( new Tagging(tag, add, person) );
+    	}
+    }
+    private void updateDeletedTags(ReadOnlyPerson person) {
+    	String delete = "-";
+    	final UniqueTagList personTags = person.getTags();
+    	Set<Tag> tagList= personTags.toSet();
+    	for ( Tag tag: tagList ) {
+    		allTagging.add( new Tagging(tag, delete, person) );
+    	}
+    }
 
     /**
      * Adds a person to the address book.
@@ -81,6 +105,7 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         allPersons.add(toAdd);
         syncTagsWithMasterList(toAdd);
+        updateAddedTags(toAdd);
     }
 
     /**
@@ -96,6 +121,7 @@ public class AddressBook {
      * @throws PersonNotFoundException if no such Person could be found.
      */
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
+    	updateDeletedTags(toRemove);
         allPersons.remove(toRemove);
     }
 
