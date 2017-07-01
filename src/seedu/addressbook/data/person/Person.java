@@ -83,5 +83,22 @@ public class Person implements ReadOnlyPerson {
     public String toString() {
         return getAsTextShowAll();
     }
+    
+    private String addDetailToDetailsString(String details, String detail) {
+    	return details +" "+ detail;
+    }
+    
+    /**
+     * Print out the details of the person requested.
+     * @param printable
+     * @return a concatenated version of the printable strings of each object.
+     */
+    private String getPrintableString(Printable ... printable) {
+    	String details = "";
+    	for ( Printable detail :printable) {
+    		addDetailToDetailsString(details, detail.getPrintableString());
+    	}
+    	return details;
+    }
 
 }

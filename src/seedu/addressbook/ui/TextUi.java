@@ -169,17 +169,4 @@ public class TextUi {
     private static String getIndexedListItem(int visibleIndex, String listItem) {
         return String.format(MESSAGE_INDEXED_LIST_ITEM, visibleIndex, listItem);
     }
-    private String addDetailToDetailsString(String details, String detail) {
-    	return details +" "+ detail;
-    }
-    
-    //Print out the details of the person requested
-    private String getPrintableString(Printable ... printable) {
-    	String details = "";
-    	for ( Printable detail :printable) {
-    		addDetailToDetailsString(details, detail.getPrintableString());
-    	}
-    	return details;
-    }
-
 }
