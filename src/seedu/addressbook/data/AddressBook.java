@@ -117,7 +117,7 @@ public class AddressBook {
     /*
      * Prints session taggings before exit
      */
-    public String printTaggingsBeforeExit(){
+    public String getSessionTaggings(){
         return sessionTagging.printAllSessionTaggings();
     }
     
