@@ -13,8 +13,8 @@ public class Tagging {
 	private final String ADD_COMMAND = "add";
 	private final String DELETE_COMMAND = "delete";
 	
-	// Records all tags added/deleted during that session.
-	public Tagging(String command, Person person, Tag tag) {
+	// Record tags added/deleted during that session.
+	public void recordTagging(String command, Person person, Tag tag) {
 		if (command == ADD_COMMAND) {
 			ALL_TAGS.add("+ " + person.getName().toString() + " " + tag.toString());
 		}
