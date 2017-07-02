@@ -104,6 +104,15 @@ public class Parser {
             return new HelpCommand();
         }
     }
+    
+    public String inputIntoCommandString(String userInput) {
+        final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+        if (!matcher.matches()) {
+            return "Invalid input";
+        }
+
+        return matcher.group("commandWord");
+    }
 
     /**
      * Parses arguments in the context of the add person command.
