@@ -1,5 +1,7 @@
 package seedu.addressbook.data.person;
 
+import java.util.StringJoiner;
+
 /**
  * Interface for objects printable in the form of Strings.
  */
@@ -13,11 +15,11 @@ public interface Printable {
 	  * Returns a concatenated version of the printable strings of each object.
 	  */
 	public static String getPrintableString(Printable... printables){
-		StringBuilder concatenatedStringBuilder = new StringBuilder();
+		StringJoiner concatenatedStrings = new StringJoiner(" ");
 		
 		for (Printable printable: printables){
-			concatenatedStringBuilder.append(printable.getPrintableString());
+			concatenatedStrings = concatenatedStrings.add(printable.getPrintableString());
 		}
-		return concatenatedStringBuilder.toString();
+		return concatenatedStrings.toString();
 	}
 }
