@@ -11,7 +11,9 @@ import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.Tagging;
 import seedu.addressbook.data.tag.UniqueTagList;
+
 
 /**
  * Represents the entire address book. Contains the data of the address book.
@@ -24,13 +26,15 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
-
+    private final Tagging sessionTagging;
+    
     /**
      * Creates an empty address book.
      */
     public AddressBook() {
         allPersons = new UniquePersonList();
         allTags = new UniqueTagList();
+        sessionTagging = new Tagging();
     }
 
     /**
@@ -43,6 +47,7 @@ public class AddressBook {
     public AddressBook(UniquePersonList persons, UniqueTagList tags) {
         this.allPersons = new UniquePersonList(persons);
         this.allTags = new UniqueTagList(tags);
+        this.sessionTagging = new Tagging();
         for (Person p : allPersons) {
             syncTagsWithMasterList(p);
         }
@@ -81,6 +86,7 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         allPersons.add(toAdd);
         syncTagsWithMasterList(toAdd);
+        sessionTagging.recordTagging(Tagging.COMMAND_ADD, toAdd);
     }
 
     /**
@@ -97,6 +103,7 @@ public class AddressBook {
      */
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
+        sessionTagging.recordTagging(Tagging.COMMAND_DELETE, toRemove);
     }
 
     /**
@@ -107,6 +114,13 @@ public class AddressBook {
         allTags.clear();
     }
 
+    /*
+     * Prints session taggings before exit
+     */
+    public String printTaggingsBeforeExit(){
+        return sessionTagging.printAllSessionTaggings();
+    }
+    
     /**
      * Returns a new UniquePersonList of all persons in the address book at the time of the call.
      */
