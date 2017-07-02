@@ -76,22 +76,15 @@ public interface ReadOnlyPerson {
     /**
      * Formats a person as text, showing only non-private contact details.
      */
-    default String getAsTextHidePrivate() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getName());
-        if (!getPhone().isPrivate()) {
-            builder.append(" Phone: ").append(getPhone());
-        }
-        if (!getEmail().isPrivate()) {
-            builder.append(" Email: ").append(getEmail());
-        }
-        if (!getAddress().isPrivate()) {
-            builder.append(" Address: ").append(getAddress());
-        }
-        builder.append(" Tags: ");
-        for (Tag tag : getTags()) {
-            builder.append(tag);
-        }
-        return builder.toString();
+    default String getAsTextHidePrivate(){
+    	StringBuilder printableString = new StringBuilder(getPrintableString(getName(), getPhone(), getEmail(), getAddress()));
+    	printableString.append(" Tags: ");
+      for (Tag tag : getTags()) {
+    	  printableString.append(tag);
+      }
+      return printableString.toString();
     }
+    
+    public String getPrintableString(Printable... printables);   
+    
 }
