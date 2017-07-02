@@ -11,6 +11,7 @@ import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.TaggingList;
 import seedu.addressbook.data.tag.UniqueTagList;
 
 /**
@@ -24,7 +25,8 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
-
+    private TaggingList sessionTaggings = new TaggingList();
+    
     /**
      * Creates an empty address book.
      */
@@ -121,6 +123,13 @@ public class AddressBook {
         return new UniqueTagList(allTags);
     }
 
+    /**
+    * Prints a list of all the tags added/deleted from a person during a session.
+    */
+    public void printSessionTaggingActivity() {
+    	sessionTaggings.list();
+    }
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
