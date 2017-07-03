@@ -1,7 +1,9 @@
 package seedu.addressbook.data;
 
 import java.util.ArrayList;
-
+/*
+ * Association class that records all addition and deletion of tags during a session
+ */
 public class Tagging {
 	private static final String ADD_COMMAND = "add";
 	private static final String DEL_COMMAND = "delete";
