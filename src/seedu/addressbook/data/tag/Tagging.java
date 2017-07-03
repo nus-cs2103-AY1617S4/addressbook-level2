@@ -3,6 +3,11 @@ package seedu.addressbook.data.tag;
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+/**
+ * Association class representing an addition/deletion of Tags for the person
+ * @author shuqi
+ *
+ */
 public class Tagging {
 	private Tag tag;
 	private String action;
@@ -19,6 +24,8 @@ public class Tagging {
 	public ReadOnlyPerson getPerson() {
 		return this.person;
 	}
+	
+	// get Name of person that Tags was added/deleted
 	public String getPersonName() {
 		return personName;
 	}

@@ -75,25 +75,22 @@ public class AddressBook {
         person.setTags(new UniqueTagList(commonTagReferences));
     }
     /**
-     * Ensures that every tag in this person is included in main Tagging List as added Tags
+     * Update Tags added for each person
+     * @param tag
      * @param person
      */
-    private void updateAddedTags(Person person) {
-    	String add = "+";
-    	final UniqueTagList personTags = person.getTags();
-    	Set<Tag> tagList= personTags.toSet();
-    	for ( Tag tag: tagList ) {
-    		allTagging.add( new Tagging(tag, add, person) );
-    	}
+    private void updateAddedTags (Tag tag, ReadOnlyPerson person) {
+    	allTagging.add(new Tagging(tag, "+", person));
     }
-    private void updateDeletedTags(ReadOnlyPerson person) {
-    	String delete = "-";
-    	final UniqueTagList personTags = person.getTags();
-    	Set<Tag> tagList= personTags.toSet();
-    	for ( Tag tag: tagList ) {
-    		allTagging.add( new Tagging(tag, delete, person) );
-    	}
+    /**
+     * Update Tags deleted for each person
+     * @param tag
+     * @param person
+     */
+    private void updateDeletedTags (Tag tag, ReadOnlyPerson person) {
+    	allTagging.add(new Tagging(tag, "-", person));
     }
+    
 
     /**
      * Adds a person to the address book.
@@ -105,7 +102,6 @@ public class AddressBook {
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         allPersons.add(toAdd);
         syncTagsWithMasterList(toAdd);
-        updateAddedTags(toAdd);
     }
 
     /**
@@ -121,7 +117,6 @@ public class AddressBook {
      * @throws PersonNotFoundException if no such Person could be found.
      */
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
-    	updateDeletedTags(toRemove);
         allPersons.remove(toRemove);
     }
 
@@ -145,6 +140,12 @@ public class AddressBook {
      */
     public UniqueTagList getAllTags() {
         return new UniqueTagList(allTags);
+    }
+    /**
+     * Returns a new ArrayList of all Tagging in the address book at the time if the call
+     */
+    public ArrayList<Tagging> getAllTagging() {
+    	return new ArrayList<Tagging>(allTagging);
     }
 
     @Override
