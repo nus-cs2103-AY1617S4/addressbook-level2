@@ -14,18 +14,18 @@ public class Tagging {
 	
 	// Record tags added/deleted during that session.
 	public void trackTagging(String command, Person person, Tag tag) {
-		if (command == ADD_COMMAND) {
+		if (command.equals(ADD_COMMAND)) {
 			allTheTags.add("+ " + person.getName().toString() + " " + tag.toString());
 		}
-		else if (command == DELETE_COMMAND) {
+		else if (command.equals(DELETE_COMMAND)) {
 			allTheTags.add("- " + person.getName().toString() + " " + tag.toString());
 		}
 	}
 	
 	// To print out a list of all the tags added/deleted during the session, when the AddressBook program exits.
-	public String getAllTags(){
+	public String getAllTags() {
 		StringBuilder allActions = new StringBuilder();
-		for(String tag: allTheTags){
+		for(String tag: allTheTags) {
 			allActions.append(tag + "\n");
 		}
 		return allActions.toString();
