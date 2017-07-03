@@ -44,7 +44,7 @@ public class Email implements Printable{
 
     @Override
     public String getPrintableString() {
-    	return "Email: " + value;
+    	return "Email: " + this.toString();
     }
 
     @Override
