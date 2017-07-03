@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 import seedu.addressbook.data.person.Person;
 
-/** Association class to support the following functionality:
- * When the AddressBook program exits, it should print out a list of all the tags added/deleted during that session.
- */
+// Association class to that prints out list of all the tags added/deleted during the session
+
 
 public class Tagging {
 	private ArrayList<String> allTheTags = new ArrayList<>();
