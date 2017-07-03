@@ -61,4 +61,5 @@ public class Phone implements Printable {
     public boolean isPrivate() {
         return isPrivate;
     }
+    
 }

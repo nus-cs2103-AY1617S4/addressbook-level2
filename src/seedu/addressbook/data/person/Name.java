@@ -17,6 +17,8 @@ public class Name implements Printable{
     public static final String NAME_PREFIX = "Name: ";
     public final String fullName;
    
+    
+    @Override
     public String getPrintableString(){
     	return NAME_PREFIX + this.toString();
     }
