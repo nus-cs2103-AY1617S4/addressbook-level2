@@ -23,9 +23,9 @@ public class Tagging {
 	}
 	
 	// To print out a list of all the tags added/deleted during the session, when the AddressBook program exits.
-	public String getAllTags() {
+	public String getAllTags(){
 		StringBuilder allActions = new StringBuilder();
-		for(String tag: allTheTags) {
+		for(String tag: allTheTags){
 			allActions.append(tag + "\n");
 		}
 		return allActions.toString();
