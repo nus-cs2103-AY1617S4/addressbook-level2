@@ -1,5 +1,8 @@
 package seedu.addressbook.tagging;
 
+/**
+ * Represents an interaction between a Person and a Tag
+ */
 import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.tag.Tag;
 
