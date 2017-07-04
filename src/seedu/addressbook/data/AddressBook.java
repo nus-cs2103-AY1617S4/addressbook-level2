@@ -1,5 +1,6 @@
 package seedu.addressbook.data;
-
+import seedu.addressbook.data.Tagging;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -21,16 +22,17 @@ import seedu.addressbook.data.tag.UniqueTagList;
  *  - The tags in each person point to tag objects in the master list. (== equality)
  */
 public class AddressBook {
-
+	private ArrayList<Tagging> allTaggingList;
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
-
+    public enum commandType {ADD, DELETE};
     /**
      * Creates an empty address book.
      */
     public AddressBook() {
         allPersons = new UniquePersonList();
         allTags = new UniqueTagList();
+        allTaggingList = new ArrayList<Tagging>();
     }
 
     /**
