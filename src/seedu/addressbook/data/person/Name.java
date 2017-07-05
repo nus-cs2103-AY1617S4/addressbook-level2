@@ -1,4 +1,4 @@
-package seedu.addressbook.data.person;
+   package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.exception.IllegalValueException;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
-public class Name {
+public class Name implements Printable{
 
     public static final String EXAMPLE = "John Doe";
     public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should be spaces or alphabetic characters";
@@ -34,6 +34,13 @@ public class Name {
      */
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
+    }
+    
+    
+    //Produces a printable string representation of the Name object. e.g. Name: John Smith
+    @Override
+    public String getPrintableString(){
+        return "Name: " + fullName;    
     }
 
     /**
