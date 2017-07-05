@@ -5,10 +5,23 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
 public class UtilsTest {
+    @Test
+    public void emptyInput(){
+        final Object obj = null;
+        assertTrue(Utils.isAnyNull(obj));
+    }
+
+    @Test
+    public void identicalInput(){
+        final ArrayList<Integer> nonUnique = new ArrayList<Integer>(Arrays.asList(1,1,3,4,5));
+        assertFalse(Utils.elementsAreUnique(nonUnique));
+    }
+    
     @Test
     public void isAnyNull() {
         // empty list
