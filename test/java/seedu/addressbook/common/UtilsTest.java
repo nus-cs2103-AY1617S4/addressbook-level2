@@ -32,9 +32,7 @@ public class UtilsTest {
         assertTrue(Utils.isAnyNull("", new Object(), null));
         assertTrue(Utils.isAnyNull(new Object(), new Object(), null));
 
-        // confirms nulls inside the list are not considered
-        List<Object> nullList = Arrays.asList((Object) null);
-        assertFalse(Utils.isAnyNull(nullList));
+        assertListNotNull();
     }
 
     @Test
@@ -51,6 +49,8 @@ public class UtilsTest {
         // all objects unique
         assertAreUnique("abc", "ab", "a");
         assertAreUnique(1, 2);
+        assertAreUnique("123", "456");
+        assertAreUnique("abc", "ABC");
 
         // some identical objects
         assertNotUnique("abc", "abc");
@@ -60,6 +60,29 @@ public class UtilsTest {
         assertNotUnique(null, 1, new Integer(1));
         assertNotUnique(null, null);
         assertNotUnique(null, "a", "b", null);
+
+        assertListUnique();
+
+    }
+
+    /**
+     * Confirms that strings inside list are not considered for uniqueness
+     *
+     */
+    private void assertListUnique() {
+        // confirms that objects inside lists are not counted as unique
+        List<Object> uniqueList = Arrays.asList("abc", "abc");
+        assertAreUnique(Utils.elementsAreUnique(uniqueList));
+    }
+
+    /**
+     * Confirms that null inside list is not considered
+     *
+     */
+    private void assertListNotNull() {
+        // confirms nulls inside the list are not considered
+        List<Object> nullList = Arrays.asList((Object) null);
+        assertFalse(Utils.isAnyNull(nullList));
     }
 
     private void assertAreUnique(Object... objects) {
@@ -69,4 +92,5 @@ public class UtilsTest {
     private void assertNotUnique(Object... objects) {
         assertFalse(Utils.elementsAreUnique(Arrays.asList(objects)));
     }
+
 }
