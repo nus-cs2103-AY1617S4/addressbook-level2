@@ -1,12 +1,12 @@
 package seedu.addressbook.data.person;
 
-import seedu.addressbook.data.tag.UniqueTagList;
-
 import java.util.Objects;
 
+import seedu.addressbook.data.tag.UniqueTagList;
+
 /**
- * Represents a Person in the address book.
- * Guarantees: details are present and not null, field values are validated.
+ * Represents a Person in the address book. Guarantees: details are present and
+ * not null, field values are validated.
  */
 public class Person implements ReadOnlyPerson {
 
@@ -16,6 +16,7 @@ public class Person implements ReadOnlyPerson {
     private Address address;
 
     private final UniqueTagList tags;
+
     /**
      * Assumption: Every field must be present and not null.
      */
@@ -24,7 +25,8 @@ public class Person implements ReadOnlyPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags); // protect internal tags from
+                                             // changes in the arg list
     }
 
     /**
@@ -70,18 +72,30 @@ public class Person implements ReadOnlyPerson {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.hasSameData((ReadOnlyPerson) other));
+                        && this.hasSameData((ReadOnlyPerson) other));
     }
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
+        // use this method for custom fields hashing instead of implementing
+        // your own
         return Objects.hash(name, phone, email, address, tags);
     }
 
     @Override
     public String toString() {
         return getAsTextShowAll();
+    }
+
+    /**
+     * Returns a concatenated version of the printable strings of each object.
+     */
+    public static String getPrintableString(Printable... printables) {
+        StringBuilder personString = new StringBuilder(1000);
+        for (Printable printable : printables) {
+            personString.append(printable.getPrintableString() + " ");
+        }
+        return personString.toString();
     }
 
 }
