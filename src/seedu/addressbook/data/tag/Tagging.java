@@ -8,17 +8,20 @@ import seedu.addressbook.data.person.Person;
  */
 public class Tagging {
 
-    private boolean status;
+    private boolean isStatusAdd;
     private Person person;
     private Tag tag;
 
-    public Tagging(boolean status) {
-        this.status = status;
+    public Tagging(boolean isStatusAdd) {
+        this.isStatusAdd = isStatusAdd;
     }
 
+    /**
+     * Method to get all Tags added/deleted in a String form.
+     */
     public String getAllTags() {
         StringBuilder tagToString = new StringBuilder(1000);
-        if (status == true) {
+        if (isStatusAdd == true) {
             tagToString.append("+" + tag);
         } else {
             tagToString.append("-" + tag);
