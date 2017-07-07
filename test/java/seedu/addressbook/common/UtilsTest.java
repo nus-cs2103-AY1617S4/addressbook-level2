@@ -51,6 +51,8 @@ public class UtilsTest {
         // all objects unique
         assertAreUnique("abc", "ab", "a");
         assertAreUnique(1, 2);
+        assertAreUnique("123", "456");
+        assertAreUnique("abc", "ABC");
 
         // some identical objects
         assertNotUnique("abc", "abc");
@@ -60,6 +62,10 @@ public class UtilsTest {
         assertNotUnique(null, 1, new Integer(1));
         assertNotUnique(null, null);
         assertNotUnique(null, "a", "b", null);
+
+        List<Object> uniqueList = Arrays.asList("abc", "abc");
+        assertAreUnique(Utils.elementsAreUnique(uniqueList));
+
     }
 
     private void assertAreUnique(Object... objects) {
@@ -69,4 +75,5 @@ public class UtilsTest {
     private void assertNotUnique(Object... objects) {
         assertFalse(Utils.elementsAreUnique(Arrays.asList(objects)));
     }
+
 }
